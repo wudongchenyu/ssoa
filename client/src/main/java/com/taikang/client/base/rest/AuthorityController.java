@@ -36,7 +36,7 @@ public class AuthorityController {
 	@ApiOperation(value = "添加权限信息", notes = "添加权限信息")
 	@ApiImplicitParams(value = {
 			@ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "String")})
-	@PostMapping("/add")
+	@PostMapping("/delete")
 	public Result<String> delete(String id) {
 		Result<String> result = authorityService.delete(id);
 		return result;
@@ -48,7 +48,7 @@ public class AuthorityController {
 			@ApiImplicitParam(name = "authorityName", value = "名称", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "subordinate", value = "所属", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "authorityUrl", value = "URL", required = true, dataType = "String")})
-	@PostMapping("/add")
+	@PostMapping("/edit")
 	public Result<Authority> edit(String id,String authorityName, String subordinate, String authorityUrl) {
 		Result<Authority> result = authorityService.edit(id, authorityName, subordinate, authorityUrl);
 		return result;
@@ -60,7 +60,7 @@ public class AuthorityController {
 			@ApiImplicitParam(name = "authorityName", value = "名称", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "subordinate", value = "所属", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "authorityUrl", value = "URL", required = true, dataType = "String")})
-	@PostMapping("/add")
+	@PostMapping("/detail")
 	public Result<Authority> detail(String id) {
 		Result<Authority> result = authorityService.detail(id);
 		return result;
@@ -72,7 +72,7 @@ public class AuthorityController {
 			@ApiImplicitParam(name = "authorityName", value = "名称", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "subordinate", value = "所属", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "authorityUrl", value = "URL", required = true, dataType = "String")})
-	@PostMapping("/add")
+	@PostMapping("/list")
 	public Result<List<Authority>> list(String id) {
 		Result<List<Authority>> result = authorityService.list(id);
 		return result;

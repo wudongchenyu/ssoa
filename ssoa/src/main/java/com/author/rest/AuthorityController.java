@@ -2,6 +2,7 @@ package com.author.rest;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,11 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+import com.author.po.Authority;
+import com.author.service.AuthorityService;
+import com.author.util.Result;
+import com.author.util.ResultEnum;
+import com.author.util.ResultUtils;
 import com.mysql.cj.util.StringUtils;
 
 @WebServlet("/authority")
 public class AuthorityController extends HttpServlet {
+	
+	private AuthorityService authorityService = AuthorityService.getInstance();
 
 	/**
 	 * 
@@ -63,33 +71,22 @@ public class AuthorityController extends HttpServlet {
 
 		System.out.println("调用doPost");
 		
-		String userName = request.getParameter("userName");
-		String password = request.getParameter("passWord");
+		String userId = request.getParameter("userId");
 		
-		response.setContentType("text/json;charset=UTF-8");
+		response.setContentType("application/json;charset=UTF-8");
 	    response.setCharacterEncoding("UTF-8");
 	    PrintWriter out = response.getWriter();
-	    JSONObject object = new JSONObject();
-	    object.put("class", this.getClass());
-	    object.put("method", "doPost");
 	    
-		if (StringUtils.isEmptyOrWhitespaceOnly(userName)) {
-			object.put("error", "用户名不能为空");
-			out.println(object);
+		if (StringUtils.isEmptyOrWhitespaceOnly(userId)) {
+			out.println(ResultUtils.error(ResultEnum.USERID_NULL_ERROR));
 		    out.flush();
 		    out.close();
 		    return;
 		}
 		
-		if (StringUtils.isEmptyOrWhitespaceOnly(password)) {
-			object.put("error", "密码不能为空");
-			out.println(object);
-		    out.flush();
-		    out.close();
-		    return;
-		}
+		Result<List<Authority>> result = authorityService.getAllAuthority(userId);
 		
-	    out.println(object);
+	    out.println(JSON.toJSON(result).toString());
 	    out.flush();
 	    out.close();
 	}

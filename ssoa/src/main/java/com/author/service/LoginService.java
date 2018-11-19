@@ -24,6 +24,10 @@ public class LoginService {
 	
 	private static LoginService loginService;
 	
+	private LoginService() {
+		
+	}
+	
 	public static synchronized LoginService getInstance() {
 		if (null == loginService) {
 			loginService = new LoginService();
